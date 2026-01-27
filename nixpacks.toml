@@ -1,9 +1,10 @@
 [phases.setup]
-nixPkgs = ['nodejs_20', 'python3']
+nixPkgs = ['nodejs_20', 'python3', 'gcc', 'gnumake']
 
 [phases.install]
 cmds = [
   'npm ci',
+  'npx prisma generate --schema=apps/api/prisma/schema.prisma',
   'npx playwright install-deps chromium',
   'npx playwright install chromium'
 ]
