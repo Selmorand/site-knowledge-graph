@@ -1,0 +1,20 @@
+{
+  "name": "@site-knowledge-graph/shared",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared types, constants, and utilities",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "pino": "^8.17.2",
+    "pino-pretty": "^10.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "typescript": "^5.3.3"
+  }
+}

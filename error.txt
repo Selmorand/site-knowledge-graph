@@ -1,0 +1,19 @@
+{"level":30,"time":1769248059271,"pid":32032,"hostname":"DESKTOP-D2J4FCN","reqId":"req-3f","req":{"method":"GET","url":"/run/cmks4kt1c0005uzytuqrg86pl","hostname":"localhost:3000","remoteAddress":"127.0.0.1","remotePort":56622},"msg":"incoming request"}
+{"level":30,"time":1769248059275,"pid":32032,"hostname":"DESKTOP-D2J4FCN","reqId":"req-3f","res":{"statusCode":200},"responseTime":3.8896000385284424,"msg":"request completed"}
+{"level":30,"time":1769248059582,"pid":32032,"hostname":"DESKTOP-D2J4FCN","reqId":"req-3g","req":{"method":"GET","url":"/","hostname":"localhost:3000","remoteAddress":"127.0.0.1","remotePort":56622},"msg":"incoming request"}
+{"level":30,"time":1769248059582,"pid":32032,"hostname":"DESKTOP-D2J4FCN","reqId":"req-3g","res":{"statusCode":200},"responseTime":0.328499972820282,"msg":"request completed"}
+[09:47:39 UTC] INFO: Starting graph build
+    siteId: "cmks4kt180003uzytyozkwo9u"
+[09:47:39 UTC] INFO: Loaded existing entities into cache
+    siteId: "cmks4kt180003uzytyozkwo9u"
+    count: 0
+[09:47:39 UTC] INFO: Processing pages for graph building
+    pageCount: 0
+[09:47:39 UTC] INFO: Saving entity relations
+    count: 0
+[09:47:39 UTC] INFO: Entity relations saved
+    count: 0
+[09:47:39 UTC] INFO: Graph build completed
+    entitiesCreated: 0
+    relationsCreated: 0
+    pagesProcessed: 0

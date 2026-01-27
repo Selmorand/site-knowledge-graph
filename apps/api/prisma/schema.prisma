@@ -1,0 +1,198 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Site {
+  id           String   @id @default(cuid())
+  url          String   @unique
+  domain       String
+  title        String?
+  description  String?
+  status       SiteStatus @default(PENDING)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  lastCrawledAt DateTime?
+
+  pages        Page[]
+  crawlJobs    CrawlJob[]
+  entities     Entity[]
+
+  @@index([domain])
+  @@index([status])
+  @@map("sites")
+}
+
+model Page {
+  id              String      @id @default(cuid())
+  siteId          String
+  url             String      @unique
+  canonicalUrl    String?
+  title           String?
+  metaDescription String?     @db.Text
+  contentHash     String?
+  htmlContent     String?     @db.Text
+  renderedHtml    String?     @db.Text
+  textContent     String?     @db.Text
+  fetchMethod     FetchMethod?
+  metadata        Json?
+  status          PageStatus  @default(PENDING)
+  depth           Int         @default(0)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  crawledAt       DateTime?
+
+  site            Site           @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  chunks          ContentChunk[]
+  entityMentions  EntityMention[]
+
+  @@index([siteId])
+  @@index([status])
+  @@index([contentHash])
+  @@map("pages")
+}
+
+model CrawlJob {
+  id           String   @id @default(cuid())
+  siteId       String
+  status       CrawlJobStatus @default(PENDING)
+  maxDepth     Int      @default(3)
+  maxPages     Int      @default(100)
+  pagesProcessed Int    @default(0)
+  startedAt    DateTime?
+  completedAt  DateTime?
+  errorMessage String?  @db.Text
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  site         Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@index([siteId])
+  @@index([status])
+  @@map("crawl_jobs")
+}
+
+enum SiteStatus {
+  PENDING
+  ACTIVE
+  PAUSED
+  COMPLETED
+  ERROR
+}
+
+enum PageStatus {
+  PENDING
+  CRAWLED
+  PROCESSING
+  COMPLETED
+  ERROR
+}
+
+enum CrawlJobStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum FetchMethod {
+  HTTP
+  PLAYWRIGHT
+}
+
+model Entity {
+  id          String       @id @default(cuid())
+  siteId      String
+  name        String
+  type        EntityType
+  aliases     String[]
+  source      EntitySource
+  confidence  Float        @default(1.0)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  site        Site             @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  mentions    EntityMention[]
+  relationsFrom EntityRelation[] @relation("fromEntity")
+  relationsTo   EntityRelation[] @relation("toEntity")
+
+  @@unique([siteId, name, type])
+  @@index([siteId])
+  @@index([type])
+  @@index([name])
+  @@map("entities")
+}
+
+model EntityMention {
+  id              String   @id @default(cuid())
+  entityId        String
+  pageId          String
+  chunkId         String?
+  contextSnippet  String   @db.Text
+  position        Int      @default(0)
+  createdAt       DateTime @default(now())
+
+  entity          Entity        @relation(fields: [entityId], references: [id], onDelete: Cascade)
+  page            Page          @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  chunk           ContentChunk? @relation(fields: [chunkId], references: [id], onDelete: SetNull)
+
+  @@index([entityId])
+  @@index([pageId])
+  @@index([chunkId])
+  @@map("entity_mentions")
+}
+
+model EntityRelation {
+  id            String       @id @default(cuid())
+  fromEntityId  String
+  toEntityId    String
+  relationType  String
+  weight        Float        @default(1.0)
+  source        EntitySource
+  createdAt     DateTime     @default(now())
+
+  fromEntity    Entity       @relation("fromEntity", fields: [fromEntityId], references: [id], onDelete: Cascade)
+  toEntity      Entity       @relation("toEntity", fields: [toEntityId], references: [id], onDelete: Cascade)
+
+  @@unique([fromEntityId, toEntityId, relationType])
+  @@index([fromEntityId])
+  @@index([toEntityId])
+  @@index([relationType])
+  @@map("entity_relations")
+}
+
+model ContentChunk {
+  id          String   @id @default(cuid())
+  pageId      String
+  headingPath String[]
+  text        String   @db.Text
+  position    Int
+  createdAt   DateTime @default(now())
+
+  page        Page            @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  mentions    EntityMention[]
+
+  @@index([pageId])
+  @@map("content_chunks")
+}
+
+enum EntityType {
+  ORGANIZATION
+  SERVICE
+  PRODUCT
+  PERSON
+  LOCATION
+  TOPIC
+}
+
+enum EntitySource {
+  SCHEMA
+  NLP
+  MANUAL
+  STRUCTURE
+}

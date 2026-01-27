@@ -1,0 +1,241 @@
+ROLE
+
+You are Claude Code acting as a knowledge systems engineer and AI-interaction architect.
+
+You are implementing Phase 3 only:
+A Question Engine that generates meaningful, answerable questions from the existing SiteReport artifact, and prepares the output for AI agent interrogation.
+
+This phase completes the system’s intelligence loop.
+
+ABSOLUTE CONSTRAINTS
+
+❌ No crawling
+
+❌ No UI redesign
+
+❌ No terminal interaction
+
+❌ No re-scraping
+
+❌ No re-summarising raw content
+
+✅ All questions must be derived from the SiteReport
+
+✅ Every question must be traceable
+
+✅ Output must be usable by both humans and AI agents
+
+✅ Questions must appear in the browser UI and exports
+
+PHASE 3 OBJECTIVE
+
+Enable the system to answer:
+
+“What questions can this website answer?”
+
+And to output:
+
+A structured Question Bank
+
+On-screen review of questions
+
+Downloadable AI-ready question sets
+
+CORE CONCEPT
+
+Introduce a QuestionEngine that operates ONLY on:
+
+SiteReport → QuestionEngine → QuestionSet
+
+
+The QuestionEngine must never access the database directly.
+
+QUESTION MODEL (MANDATORY)
+
+Create a canonical question structure:
+
+Question {
+  id
+  questionText
+  questionType
+  level            // chunk | page | entity | graph
+  entityIds[]
+  sourceChunkIds[]
+  sourcePageIds[]
+  answerConfidence
+}
+
+
+All questions must be:
+
+deterministic
+
+deduplicated
+
+answerable from known data
+
+QUESTION TYPES (MINIMUM)
+
+Support at least:
+
+Definition
+
+How-to / Process
+
+Capability
+
+Relationship
+
+Coverage / Scope
+
+Comparison (where possible)
+
+Gap / Missing information
+
+QUESTION GENERATION STRATEGY
+1️⃣ CHUNK-LEVEL QUESTIONS
+
+From content chunks:
+
+“What does this section explain?”
+
+“How does X work?”
+
+“What is required for Y?”
+
+2️⃣ PAGE-LEVEL QUESTIONS
+
+From page structure:
+
+“What is the purpose of this page?”
+
+“What does this page explain about X?”
+
+3️⃣ ENTITY-LEVEL QUESTIONS
+
+From entities:
+
+“What services does {Organization} offer?”
+
+“What is {Service}?”
+
+“How is {Entity A} related to {Entity B}?”
+
+4️⃣ GRAPH-LEVEL QUESTIONS
+
+From relationships:
+
+“Which services are related to X?”
+
+“What topics cluster around Y?”
+
+“What does the site not explain clearly?”
+
+QUESTION QUALITY CONTROLS
+
+Implement:
+
+Similarity deduplication
+
+Confidence scoring
+
+Traceability checks
+
+Reject any question that:
+
+Cannot be traced to a source
+
+Requires speculation
+
+Requires external knowledge
+
+AI INTERROGATION EXPORT (CRITICAL)
+
+Create a strict AI-agent input format:
+
+{
+  "site": {...},
+  "report_metadata": {...},
+  "questions": [...],
+  "guidance": {
+    "how_to_answer": "Answer only from provided data",
+    "allowed_sources": ["pages", "chunks", "entities"],
+    "forbidden": ["external knowledge", "assumptions"]
+  }
+}
+
+
+This file must be safe to hand to:
+
+LLM agents
+
+Analysis pipelines
+
+Automated reasoning systems
+
+UI INTEGRATION (MANDATORY)
+
+Extend the existing browser UI:
+
+Add to REPORT SCREEN:
+
+New section: “Question Bank”
+
+Group questions by:
+
+type
+
+entity
+
+level
+
+Expand / collapse per group
+
+Add download buttons:
+
+Download Questions (JSON)
+
+Download Questions (CSV)
+
+No terminal. No manual triggers.
+
+API (INTERNAL ONLY)
+
+You may add:
+
+Internal service to build question sets
+
+Internal endpoints called by UI
+
+These must not be user-facing.
+
+ACCEPTANCE CRITERIA
+
+Phase 3 is complete ONLY if:
+
+Questions appear in the browser UI
+
+Every question is traceable
+
+JSON export can be fed directly to an AI agent
+
+No scraping or crawling occurs
+
+No terminal interaction is required
+
+A human can read the questions and say:
+“Yes, this site could answer these.”
+
+FINAL INSTRUCTION
+
+Implement Phase 3 fully.
+
+Do NOT:
+
+Add AI answers
+
+Add embeddings unless strictly required
+
+Add external data
+
+The output of this phase is intelligence-ready, not opinionated.
