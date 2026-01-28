@@ -3,11 +3,13 @@ import { env } from '@/config/env';
 import { logger } from '@site-knowledge-graph/shared';
 
 // Log Redis configuration for debugging
-logger.info({
-  host: env.REDIS_HOST,
-  port: env.REDIS_PORT,
-  hasPassword: !!env.REDIS_PASSWORD
-}, 'Initializing Redis connection with config');
+console.log('=== REDIS CONFIG DEBUG ===');
+console.log('REDIS_HOST:', env.REDIS_HOST);
+console.log('REDIS_PORT:', env.REDIS_PORT);
+console.log('REDIS_PASSWORD:', env.REDIS_PASSWORD ? '[REDACTED]' : 'undefined');
+console.log('========================');
+
+logger.info(`Initializing Redis: host=${env.REDIS_HOST}, port=${env.REDIS_PORT}, hasPassword=${!!env.REDIS_PASSWORD}`);
 
 export const redis = new Redis({
   host: env.REDIS_HOST,
@@ -24,13 +26,15 @@ redis.on('connect', () => {
 });
 
 redis.on('error', (error) => {
-  logger.error({
-    error,
-    message: error.message,
-    code: (error as any).code,
-    host: env.REDIS_HOST,
-    port: env.REDIS_PORT
-  }, 'Redis connection error');
+  console.error('=== REDIS ERROR ===');
+  console.error('Message:', error.message);
+  console.error('Code:', (error as any).code);
+  console.error('Errno:', (error as any).errno);
+  console.error('Host:', env.REDIS_HOST);
+  console.error('Port:', env.REDIS_PORT);
+  console.error('==================');
+
+  logger.error(`Redis connection error: ${error.message} (code: ${(error as any).code})`);
 });
 
 redis.on('close', () => {
