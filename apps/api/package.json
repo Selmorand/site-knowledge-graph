@@ -6,8 +6,8 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
-    "start": "node -r ./register-paths.js dist/index.js",
+    "build": "tsc && tsc-alias",
+    "start": "node dist/index.js",
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
     "db:generate": "prisma generate",
@@ -29,13 +29,13 @@
     "@mozilla/readability": "^0.5.0",
     "jsdom": "^24.0.0",
     "bullmq": "^5.1.9",
-    "fast-xml-parser": "^4.3.4",
-    "tsconfig-paths": "^4.2.0"
+    "fast-xml-parser": "^4.3.4"
   },
   "devDependencies": {
     "@types/node": "^20.11.5",
     "prisma": "^5.8.1",
     "tsx": "^4.7.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "tsc-alias": "^1.8.8"
   }
 }
