@@ -10,7 +10,10 @@ cmds = [
 ]
 
 [phases.build]
-cmds = ['npm run build']
+cmds = [
+  'npm run build --workspace=packages/shared',
+  'npm run build --workspace=apps/api'
+]
 
 [start]
 cmd = 'npm start'
