@@ -2,6 +2,13 @@ import Redis from 'ioredis';
 import { env } from '@/config/env';
 import { logger } from '@site-knowledge-graph/shared';
 
+// Log Redis configuration for debugging
+logger.info({
+  host: env.REDIS_HOST,
+  port: env.REDIS_PORT,
+  hasPassword: !!env.REDIS_PASSWORD
+}, 'Initializing Redis connection with config');
+
 export const redis = new Redis({
   host: env.REDIS_HOST,
   port: parseInt(env.REDIS_PORT, 10),
@@ -17,7 +24,13 @@ redis.on('connect', () => {
 });
 
 redis.on('error', (error) => {
-  logger.error({ error }, 'Redis connection error');
+  logger.error({
+    error,
+    message: error.message,
+    code: (error as any).code,
+    host: env.REDIS_HOST,
+    port: env.REDIS_PORT
+  }, 'Redis connection error');
 });
 
 redis.on('close', () => {
