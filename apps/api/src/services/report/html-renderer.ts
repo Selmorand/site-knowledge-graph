@@ -39,26 +39,30 @@ function getCSS(): string {
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       line-height: 1.6;
-      color: #333;
-      background: #f5f5f5;
+      color: #ffffff;
+      background: #0a0a0a;
       padding: 20px;
     }
 
     .report-container {
       max-width: 1200px;
       margin: 0 auto;
-      background: white;
+      background: rgba(26, 26, 26, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       padding: 40px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      border-radius: 8px;
     }
 
     h1 {
       font-size: 2.5em;
       margin-bottom: 0.5em;
-      color: #1a1a1a;
-      border-bottom: 3px solid #0066cc;
+      color: #ffffff;
+      font-weight: 600;
+      border-bottom: 2px solid #3b82f6;
       padding-bottom: 0.3em;
     }
 
@@ -66,8 +70,9 @@ function getCSS(): string {
       font-size: 1.8em;
       margin-top: 1.5em;
       margin-bottom: 0.8em;
-      color: #0066cc;
-      border-bottom: 2px solid #e0e0e0;
+      color: #3b82f6;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       padding-bottom: 0.3em;
     }
 
@@ -75,12 +80,19 @@ function getCSS(): string {
       font-size: 1.3em;
       margin-top: 1em;
       margin-bottom: 0.5em;
-      color: #333;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    h4 {
+      color: #ffffff;
+      font-weight: 600;
     }
 
     .meta {
-      color: #666;
+      color: #9ca3af;
       font-size: 0.9em;
+      font-weight: 400;
       margin-bottom: 2em;
     }
 
@@ -93,17 +105,24 @@ function getCSS(): string {
     th, td {
       padding: 12px;
       text-align: left;
-      border-bottom: 1px solid #e0e0e0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     th {
-      background-color: #f8f9fa;
+      background-color: rgba(26, 26, 26, 0.8);
       font-weight: 600;
-      color: #333;
+      color: #ffffff;
+      position: sticky;
+      top: 0;
+    }
+
+    td {
+      color: #ffffff;
     }
 
     tr:hover {
-      background-color: #f8f9fa;
+      background-color: rgba(59, 130, 246, 0.1);
+      transition: all 0.2s ease;
     }
 
     .stat-grid {
@@ -114,21 +133,30 @@ function getCSS(): string {
     }
 
     .stat-card {
-      background: #f8f9fa;
+      background: rgba(26, 26, 26, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       padding: 20px;
       border-radius: 8px;
-      border-left: 4px solid #0066cc;
+      border-left: 4px solid #3b82f6;
+      transition: all 0.2s ease;
+    }
+
+    .stat-card:hover {
+      border-left-color: #f57f20;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
     }
 
     .stat-value {
       font-size: 2em;
-      font-weight: bold;
-      color: #0066cc;
+      font-weight: 600;
+      color: #3b82f6;
     }
 
     .stat-label {
-      color: #666;
+      color: #9ca3af;
       font-size: 0.9em;
+      font-weight: 400;
       margin-top: 0.3em;
     }
 
@@ -140,23 +168,27 @@ function getCSS(): string {
       font-weight: 500;
     }
 
-    .badge-success { background: #d4edda; color: #155724; }
-    .badge-warning { background: #fff3cd; color: #856404; }
-    .badge-error { background: #f8d7da; color: #721c24; }
-    .badge-info { background: #d1ecf1; color: #0c5460; }
+    .badge-success { background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid #10b981; }
+    .badge-warning { background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid #f59e0b; }
+    .badge-error { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid #ef4444; }
+    .badge-info { background: rgba(59, 130, 246, 0.2); color: #3b82f6; border: 1px solid #3b82f6; }
 
     .observation {
-      background: #fffbea;
-      border-left: 4px solid #f9c74f;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-left: 4px solid #f59e0b;
       padding: 15px;
       margin: 1em 0;
+      border-radius: 8px;
+      color: #ffffff;
     }
 
     details {
       margin: 1em 0;
-      border: 1px solid #e0e0e0;
-      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
       padding: 10px;
+      background: rgba(26, 26, 26, 0.8);
     }
 
     summary {
@@ -164,41 +196,49 @@ function getCSS(): string {
       font-weight: 600;
       padding: 5px;
       user-select: none;
+      color: #ffffff;
+      transition: all 0.2s ease;
     }
 
     summary:hover {
-      background: #f8f9fa;
+      color: #3b82f6;
     }
 
     .footer {
       margin-top: 3em;
       padding-top: 1em;
-      border-top: 1px solid #e0e0e0;
-      color: #666;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #9ca3af;
       font-size: 0.9em;
+      font-weight: 400;
       text-align: center;
     }
 
     code {
-      background: #f4f4f4;
+      background: rgba(26, 26, 26, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       padding: 2px 6px;
       border-radius: 3px;
       font-family: 'Courier New', monospace;
       font-size: 0.9em;
+      color: #3b82f6;
     }
 
     /* Question Bank Styles */
     .question-bank {
       margin: 2em 0;
       padding: 20px;
-      background: #f8f9fa;
+      background: rgba(26, 26, 26, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 8px;
     }
 
     .section-intro {
       margin-bottom: 20px;
       font-style: italic;
-      color: #666;
+      color: #9ca3af;
+      font-weight: 400;
     }
 
     .download-buttons {
@@ -210,38 +250,41 @@ function getCSS(): string {
     .download-btn {
       display: inline-block;
       padding: 12px 24px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
+      background: #3b82f6;
+      color: #ffffff;
       text-decoration: none;
-      border-radius: 6px;
-      font-weight: 500;
-      transition: transform 0.2s, box-shadow 0.2s;
+      border-radius: 8px;
+      font-weight: 400;
+      transition: all 0.2s ease;
     }
 
     .download-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+      transform: translateY(-1px);
     }
 
     .question-group {
       margin: 20px 0;
-      background: white;
+      background: rgba(26, 26, 26, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       padding: 20px;
-      border-radius: 6px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
     }
 
     .question-group h3 {
       margin: 0;
       padding: 10px 0;
-      color: #0066cc;
-      border-bottom: 2px solid #e0e0e0;
+      color: #3b82f6;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .question-group h4 {
       margin: 15px 0 10px 0;
-      color: #333;
+      color: #ffffff;
       font-size: 1.1em;
+      font-weight: 600;
     }
 
     .collapsible-section {
@@ -251,7 +294,7 @@ function getCSS(): string {
     .toggle-indicator {
       float: right;
       font-size: 0.8em;
-      color: #999;
+      color: #9ca3af;
     }
 
     .question-list {
@@ -263,20 +306,28 @@ function getCSS(): string {
     .question-item {
       padding: 12px 15px;
       margin: 8px 0;
-      background: #f8f9fa;
-      border-left: 3px solid #0066cc;
-      border-radius: 4px;
+      background: rgba(26, 26, 26, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-left: 3px solid #3b82f6;
+      border-radius: 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .question-item:hover {
+      border-left-color: #f57f20;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
     }
 
     .question-text {
       flex: 1;
       min-width: 250px;
       font-size: 1.05em;
+      color: #ffffff;
     }
 
     .question-meta {
@@ -292,37 +343,39 @@ function getCSS(): string {
       border-radius: 12px;
       font-size: 0.85em;
       font-weight: 500;
-      color: white;
+      color: #ffffff;
     }
 
     .confidence-badge {
-      background: #28a745;
+      background: #10b981;
     }
 
     .level-badge {
-      background: #6c757d;
+      background: #9ca3af;
     }
 
     .type-badge {
-      background: #17a2b8;
+      background: #3b82f6;
     }
 
     .ai-guidance {
       margin-top: 30px;
       padding: 20px;
-      background: #fff3cd;
-      border-left: 4px solid #ffc107;
-      border-radius: 4px;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-left: 4px solid #f59e0b;
+      border-radius: 8px;
     }
 
     .ai-guidance h4 {
       margin-top: 0;
-      color: #856404;
+      color: #ffffff;
+      font-weight: 600;
     }
 
     .ai-guidance p {
       margin: 8px 0;
-      color: #856404;
+      color: #9ca3af;
     }
 
     /* Print styles */
@@ -330,11 +383,22 @@ function getCSS(): string {
       body {
         background: white;
         padding: 0;
+        color: #000;
       }
 
       .report-container {
         box-shadow: none;
         padding: 20px;
+        background: white;
+        border: none;
+      }
+
+      h1, h2, h3, h4 {
+        color: #000;
+      }
+
+      .meta, td, th, summary {
+        color: #000;
       }
 
       h2 {
@@ -347,10 +411,13 @@ function getCSS(): string {
 
       .stat-card {
         page-break-inside: avoid;
+        background: #f5f5f5;
+        border: 1px solid #ccc;
       }
 
       details {
-        border: none;
+        border: 1px solid #ccc;
+        background: white;
       }
 
       summary {
@@ -364,6 +431,11 @@ function getCSS(): string {
       tr:hover {
         background-color: transparent;
       }
+
+      .badge-success { background: #d4edda; color: #155724; }
+      .badge-warning { background: #fff3cd; color: #856404; }
+      .badge-error { background: #f8d7da; color: #721c24; }
+      .badge-info { background: #d1ecf1; color: #0c5460; }
     }
 
     @page {
@@ -388,40 +460,40 @@ function renderHeader(report: SiteReport): string {
 
 function renderDownloadButtons(siteId: string): string {
   return `
-    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 8px; margin: 30px 0; text-align: center;">
-      <h3 style="color: white; margin-bottom: 20px; font-size: 1.3em;">📥 Download Report</h3>
+    <div style="background: linear-gradient(135deg, #3b82f6 0%, #f57f20 100%); padding: 25px; border-radius: 8px; margin: 30px 0; text-align: center; border: 1px solid rgba(255, 255, 255, 0.1);">
+      <h3 style="color: #ffffff; margin-bottom: 20px; font-size: 1.3em; font-weight: 600;">📥 Download Report</h3>
       <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
         <a href="/api/report/${siteId}/export/pdf"
            class="download-btn"
-           style="background: white; color: #667eea; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 500; display: inline-block;">
+           style="background: rgba(26, 26, 26, 0.8); color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 400; display: inline-block; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.2s ease;">
           📄 PDF Report
         </a>
         <a href="/api/report/${siteId}/export/json"
            class="download-btn"
-           style="background: white; color: #667eea; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 500; display: inline-block;">
+           style="background: rgba(26, 26, 26, 0.8); color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 400; display: inline-block; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.2s ease;">
           🤖 JSON (AI-Ready)
         </a>
         <a href="/api/report/${siteId}/export/pages.csv"
            class="download-btn"
-           style="background: white; color: #667eea; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 500; display: inline-block;">
+           style="background: rgba(26, 26, 26, 0.8); color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 400; display: inline-block; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.2s ease;">
           📊 Pages CSV
         </a>
         <a href="/api/report/${siteId}/export/entities.csv"
            class="download-btn"
-           style="background: white; color: #667eea; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 500; display: inline-block;">
+           style="background: rgba(26, 26, 26, 0.8); color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 400; display: inline-block; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.2s ease;">
           🏢 Entities CSV
         </a>
         <a href="/api/report/${siteId}/export/relationships.csv"
            class="download-btn"
-           style="background: white; color: #667eea; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 500; display: inline-block;">
+           style="background: rgba(26, 26, 26, 0.8); color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 400; display: inline-block; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.2s ease;">
           🔗 Relationships CSV
         </a>
       </div>
-      <p style="color: white; margin-top: 15px; font-size: 0.9em; opacity: 0.9;">
+      <p style="color: #ffffff; margin-top: 15px; font-size: 0.9em; font-weight: 400;">
         All exports are generated from the same analysis data
       </p>
       <div style="margin-top: 20px;">
-        <a href="/" style="color: white; text-decoration: underline; font-size: 0.95em;">
+        <a href="/" style="color: #ffffff; text-decoration: none; font-size: 0.95em; transition: all 0.2s ease; border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
           ← Analyze Another Website
         </a>
       </div>

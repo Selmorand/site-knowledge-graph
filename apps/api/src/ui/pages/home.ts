@@ -73,16 +73,16 @@ export function renderHomePage(error?: string): string {
       </button>
     </form>
 
-    <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 6px;">
-      <h3 style="margin-bottom: 10px;">What happens next?</h3>
-      <ol style="margin-left: 20px;">
+    <div style="margin-top: 30px; padding: 20px; background: rgba(26, 26, 26, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px;">
+      <h3 style="margin-bottom: 10px; color: #ffffff; font-weight: 600;">What happens next?</h3>
+      <ol style="margin-left: 20px; color: #ffffff;">
         <li>The system will crawl your website</li>
         <li>Extract entities and relationships</li>
         <li>Build a knowledge graph</li>
         <li>Generate a comprehensive report</li>
         <li>Provide downloadable exports (PDF, CSV, JSON)</li>
       </ol>
-      <p style="margin-top: 10px; color: #666;"><strong>Note:</strong> Analysis time depends on site size. Small sites: 1-2 minutes. Larger sites: 5-10 minutes.</p>
+      <p style="margin-top: 10px; color: #9ca3af;"><strong>Note:</strong> Analysis time depends on site size. Small sites: 1-2 minutes. Larger sites: 5-10 minutes.</p>
     </div>
   `;
 

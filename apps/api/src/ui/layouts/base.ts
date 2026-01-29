@@ -13,10 +13,10 @@ export function baseLayout(title: string, content: string): string {
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       line-height: 1.6;
-      color: #333;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      background: #0a0a0a;
       min-height: 100vh;
       padding: 20px;
     }
@@ -24,9 +24,11 @@ export function baseLayout(title: string, content: string): string {
     .container {
       max-width: 900px;
       margin: 0 auto;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      background: rgba(26, 26, 26, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
       padding: 40px;
     }
 
@@ -34,18 +36,20 @@ export function baseLayout(title: string, content: string): string {
       text-align: center;
       margin-bottom: 40px;
       padding-bottom: 20px;
-      border-bottom: 2px solid #e0e0e0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .header h1 {
       font-size: 2.5em;
-      color: #667eea;
+      font-weight: 600;
+      color: #ffffff;
       margin-bottom: 10px;
     }
 
     .header p {
-      color: #666;
+      color: #9ca3af;
       font-size: 1.1em;
+      font-weight: 400;
     }
 
     .content {
@@ -55,51 +59,60 @@ export function baseLayout(title: string, content: string): string {
     .btn {
       display: inline-block;
       padding: 12px 24px;
-      background: #667eea;
-      color: white;
+      background: #3b82f6;
+      color: #ffffff;
       text-decoration: none;
-      border-radius: 6px;
+      border-radius: 8px;
       border: none;
       font-size: 1em;
       cursor: pointer;
-      transition: background 0.3s;
-      font-weight: 500;
+      transition: all 0.2s ease;
+      font-weight: 400;
     }
 
     .btn:hover {
-      background: #5568d3;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+      transform: translateY(-1px);
     }
 
     .btn-secondary {
-      background: #6c757d;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #ffffff;
     }
 
     .btn-secondary:hover {
-      background: #5a6268;
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: none;
     }
 
     .btn-success {
-      background: #28a745;
+      background: #10b981;
     }
 
     .btn-success:hover {
-      background: #218838;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
     }
 
     input[type="text"],
-    input[type="url"] {
+    input[type="url"],
+    input[type="number"] {
       width: 100%;
       padding: 12px;
-      border: 2px solid #e0e0e0;
-      border-radius: 6px;
+      background: #1a1a1a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
       font-size: 1em;
-      transition: border-color 0.3s;
+      color: #ffffff;
+      transition: all 0.2s ease;
     }
 
     input[type="text"]:focus,
-    input[type="url"]:focus {
+    input[type="url"]:focus,
+    input[type="number"]:focus {
       outline: none;
-      border-color: #667eea;
+      border-color: #3b82f6;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
     }
 
     .form-group {
@@ -109,47 +122,51 @@ export function baseLayout(title: string, content: string): string {
     label {
       display: block;
       margin-bottom: 8px;
-      font-weight: 500;
-      color: #333;
+      font-weight: 600;
+      color: #ffffff;
     }
 
     .help-text {
-      color: #666;
+      color: #9ca3af;
       font-size: 0.9em;
+      font-weight: 400;
       margin-top: 5px;
     }
 
     .alert {
       padding: 15px;
-      border-radius: 6px;
+      border-radius: 8px;
       margin: 20px 0;
+      background: rgba(26, 26, 26, 0.8);
+      backdrop-filter: blur(10px);
     }
 
     .alert-info {
-      background: #d1ecf1;
-      color: #0c5460;
-      border-left: 4px solid #17a2b8;
+      border: 1px solid #3b82f6;
+      color: #ffffff;
+      border-left: 4px solid #3b82f6;
     }
 
     .alert-success {
-      background: #d4edda;
-      color: #155724;
-      border-left: 4px solid #28a745;
+      border: 1px solid #10b981;
+      color: #ffffff;
+      border-left: 4px solid #10b981;
     }
 
     .alert-error {
-      background: #f8d7da;
-      color: #721c24;
-      border-left: 4px solid #dc3545;
+      border: 1px solid #ef4444;
+      color: #ffffff;
+      border-left: 4px solid #ef4444;
     }
 
     .footer {
       margin-top: 40px;
       padding-top: 20px;
-      border-top: 1px solid #e0e0e0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
       text-align: center;
-      color: #666;
+      color: #9ca3af;
       font-size: 0.9em;
+      font-weight: 400;
     }
   </style>
 </head>

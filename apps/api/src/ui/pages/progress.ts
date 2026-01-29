@@ -19,15 +19,15 @@ export function renderProgressPage(data: ProgressData): string {
   const content = `
     <h2>Analyzing Website</h2>
 
-    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-      <p style="font-size: 1.2em; margin-bottom: 10px;"><strong>URL:</strong> ${escapeHtml(url)}</p>
-      <p><strong>Status:</strong> <span style="color: ${getStatusColor(status)}">${getStatusText(status, phase)}</span></p>
+    <div style="background: rgba(26, 26, 26, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 8px; margin: 20px 0;">
+      <p style="font-size: 1.2em; margin-bottom: 10px; color: #ffffff;"><strong>URL:</strong> ${escapeHtml(url)}</p>
+      <p style="color: #ffffff;"><strong>Status:</strong> <span style="color: ${getStatusColor(status)}">${getStatusText(status, phase)}</span></p>
     </div>
 
     ${phase === 'error' && error ? `
       <div class="alert alert-error">
         <strong>Analysis Failed</strong><br><br>
-        <pre style="background: #fff; padding: 15px; border-radius: 5px; overflow-x: auto; text-align: left; white-space: pre-wrap; word-wrap: break-word;">${escapeHtml(error)}</pre>
+        <pre style="background: #1a1a1a; padding: 15px; border-radius: 8px; overflow-x: auto; text-align: left; white-space: pre-wrap; word-wrap: break-word; color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.1);">${escapeHtml(error)}</pre>
         <br>
         <a href="/" class="btn btn-secondary">Try Another Website</a>
       </div>
@@ -44,12 +44,12 @@ export function renderProgressPage(data: ProgressData): string {
     ` : `
       <!-- Progress indicator -->
       <div style="margin: 30px 0;">
-        <div style="background: #e0e0e0; border-radius: 10px; height: 30px; overflow: hidden;">
-          <div style="background: linear-gradient(90deg, #667eea, #764ba2); height: 100%; width: ${progressPercentage}%; transition: width 0.3s; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+        <div style="background: rgba(26, 26, 26, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; height: 30px; overflow: hidden;">
+          <div style="background: linear-gradient(90deg, #3b82f6, #f57f20); height: 100%; width: ${progressPercentage}%; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; color: #ffffff; font-weight: 600; box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);">
             ${progressPercentage > 10 ? Math.round(progressPercentage) + '%' : ''}
           </div>
         </div>
-        <p style="text-align: center; margin-top: 10px; color: #666;">
+        <p style="text-align: center; margin-top: 10px; color: #9ca3af;">
           ${pagesProcessed} of ${maxPages} pages processed
         </p>
       </div>
@@ -66,10 +66,10 @@ export function renderProgressPage(data: ProgressData): string {
         }, 3000);
       </script>
 
-      <div style="text-align: center; margin-top: 30px; color: #666;">
+      <div style="text-align: center; margin-top: 30px; color: #9ca3af;">
         <p>This page will refresh automatically...</p>
         <p style="font-size: 0.9em; margin-top: 10px;">
-          <a href="/" style="color: #667eea;">Cancel and start over</a>
+          <a href="/" style="color: #3b82f6; text-decoration: none; transition: all 0.2s ease;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Cancel and start over</a>
         </p>
       </div>
     `}
@@ -87,10 +87,10 @@ function getStatusText(status: string, phase: string): string {
 }
 
 function getStatusColor(status: string): string {
-  if (status === 'COMPLETED') return '#28a745';
-  if (status === 'FAILED' || status === 'ERROR') return '#dc3545';
-  if (status === 'RUNNING') return '#667eea';
-  return '#6c757d';
+  if (status === 'COMPLETED') return '#10b981';
+  if (status === 'FAILED' || status === 'ERROR') return '#ef4444';
+  if (status === 'RUNNING') return '#3b82f6';
+  return '#9ca3af';
 }
 
 function getPhaseIndicator(phase: string): string {
@@ -107,12 +107,12 @@ function getPhaseIndicator(phase: string): string {
           <div style="font-size: 2em; margin-bottom: 10px; ${p.active ? 'animation: pulse 1.5s infinite;' : 'opacity: 0.3;'}">
             ${p.label.split(' ')[0]}
           </div>
-          <div style="font-size: 0.9em; ${p.active ? 'font-weight: bold; color: #667eea;' : 'color: #999;'}">
+          <div style="font-size: 0.9em; ${p.active ? 'font-weight: 600; color: #3b82f6;' : 'color: #9ca3af;'}">
             ${p.label.substring(p.label.indexOf(' ') + 1)}
           </div>
         </div>
         ${i < phases.length - 1 ? `
-          <div style="flex: 0 0 30px; font-size: 1.5em; color: #ccc;">→</div>
+          <div style="flex: 0 0 30px; font-size: 1.5em; color: rgba(255, 255, 255, 0.2);">→</div>
         ` : ''}
       `).join('')}
     </div>
