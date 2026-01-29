@@ -5,6 +5,7 @@ import { extractDomain, normalizeUrl } from '@/utils/url-utils';
 import { GraphService } from '@/services/graph/graph.service';
 import { renderHomePage } from './pages/home';
 import { renderProgressPage } from './pages/progress';
+import { renderReportsPage } from './pages/reports';
 
 export async function uiRoutes(fastify: FastifyInstance) {
   // Home page - URL input form
@@ -181,5 +182,44 @@ export async function uiRoutes(fastify: FastifyInstance) {
   fastify.get('/report/:siteId', async (request, reply) => {
     const { siteId } = request.params as { siteId: string };
     return reply.redirect(303, `/api/report/${siteId}`);
+  });
+
+  // Reports list page - shows all past analyses
+  fastify.get('/reports', async (_request, reply) => {
+    try {
+      const sites = await prisma.site.findMany({
+        select: {
+          id: true,
+          url: true,
+          domain: true,
+          title: true,
+          status: true,
+          lastCrawledAt: true,
+          _count: {
+            select: {
+              pages: true,
+              entities: true,
+            },
+          },
+        },
+        orderBy: { lastCrawledAt: 'desc' },
+      });
+
+      const reports = sites.map(site => ({
+        siteId: site.id,
+        url: site.url,
+        domain: site.domain,
+        title: site.title,
+        status: site.status,
+        lastCrawledAt: site.lastCrawledAt,
+        pageCount: site._count.pages,
+        entityCount: site._count.entities,
+      }));
+
+      const html = renderReportsPage(reports);
+      return reply.type('text/html').send(html);
+    } catch (error: any) {
+      return reply.code(500).send(`Error loading reports: ${error.message}`);
+    }
   });
 }

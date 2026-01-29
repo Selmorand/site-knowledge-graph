@@ -2,7 +2,12 @@ import { baseLayout } from '../layouts/base';
 
 export function renderHomePage(error?: string): string {
   const content = `
-    <h2>Analyze a Website</h2>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <h2 style="margin: 0;">Analyze a Website</h2>
+      <a href="/ui/reports" class="btn btn-secondary" style="text-decoration: none;">
+        📊 View Past Reports
+      </a>
+    </div>
 
     ${error ? `
       <div class="alert alert-error">
