@@ -4,7 +4,7 @@ export function renderHomePage(error?: string): string {
   const content = `
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
       <h2 style="margin: 0;">Analyze a Website</h2>
-      <a href="/ui/reports" class="btn btn-secondary" style="text-decoration: none;">
+      <a href="/reports" class="btn btn-secondary" style="text-decoration: none;">
         📊 View Past Reports
       </a>
     </div>
