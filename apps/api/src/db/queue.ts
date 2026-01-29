@@ -1,6 +1,6 @@
 import { Queue, Job } from 'bullmq';
-import { env } from '@/config/env';
 import { logger } from '@site-knowledge-graph/shared';
+import { getRedisConnectionConfig } from './redis';
 
 export interface CrawlJobData {
   jobId: string;
@@ -11,11 +11,7 @@ export interface CrawlJobData {
 }
 
 export const crawlQueue = new Queue<CrawlJobData>('crawl-jobs', {
-  connection: {
-    host: env.REDIS_HOST,
-    port: parseInt(env.REDIS_PORT, 10),
-    password: env.REDIS_PASSWORD || undefined,
-  },
+  connection: getRedisConnectionConfig(),
   defaultJobOptions: {
     attempts: 3,
     backoff: {

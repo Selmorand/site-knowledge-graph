@@ -1,9 +1,9 @@
 import { Worker, Job } from 'bullmq';
-import { env } from '@/config/env';
 import { logger } from '@site-knowledge-graph/shared';
 import { CrawlJobData } from '@/db/queue';
 import { CrawlerService } from '@/services/crawler/crawler.service';
 import { closeBrowser } from '@/services/crawler/fetcher';
+import { getRedisConnectionConfig } from '@/db/redis';
 
 export const crawlWorker = new Worker<CrawlJobData>(
   'crawl-jobs',
@@ -25,11 +25,7 @@ export const crawlWorker = new Worker<CrawlJobData>(
     logger.info({ jobId }, 'Crawl job completed');
   },
   {
-    connection: {
-      host: env.REDIS_HOST,
-      port: parseInt(env.REDIS_PORT, 10),
-      password: env.REDIS_PASSWORD || undefined,
-    },
+    connection: getRedisConnectionConfig(),
     concurrency: 1, // Process one job at a time
     limiter: {
       max: 1,
