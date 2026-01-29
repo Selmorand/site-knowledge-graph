@@ -2,7 +2,7 @@
 
 ## Project Intent
 
-`site-knowledge-graph` is a **local-first application** designed to crawl websites with explicit owner permission, extract structured content, and prepare data for knowledge graph generation and question-answer pair creation.
+`site-knowledge-graph` is a **cloud-deployed application** (hosted on Railway) designed to crawl websites with explicit owner permission, extract structured content, and prepare data for knowledge graph generation and question-answer pair creation.
 
 This project is developed in **phases** to ensure clean, maintainable architecture at each step.
 
@@ -15,17 +15,18 @@ This project is developed in **phases** to ensure clean, maintainable architectu
 3. **Validation**: Use Zod for all input validation
 4. **Clean Architecture**: Separate concerns across layers (routes, services, data)
 5. **No Pseudo-code**: All code must compile and run
-6. **Local-First**: Data stays on the user's machine
+6. **Cloud-Deployed**: Hosted on Railway with managed database and cache services
 
 ### Technology Standards
 
 - **Runtime**: Node.js LTS (v20+)
 - **Language**: TypeScript with strict configuration
 - **API Framework**: Fastify (chosen for performance and TypeScript support)
-- **Database**: PostgreSQL (relational integrity for site/page relationships)
-- **Cache/Queue**: Redis (for job management and caching)
+- **Database**: PostgreSQL (Railway managed service)
+- **Cache/Queue**: Redis (Railway managed service)
 - **ORM**: Prisma (type-safe database access)
 - **Validation**: Zod (runtime type validation)
+- **Deployment**: Railway (automatic deployments from Git)
 
 ### Code Standards
 
@@ -47,7 +48,7 @@ This project is developed in **phases** to ensure clean, maintainable architectu
 - Project structure
 - Database schema (Site, Page, CrawlJob)
 - API server (basic health checks only)
-- Docker infrastructure
+- Railway deployment configuration
 - Development tooling
 
 **Rules**:
@@ -144,12 +145,12 @@ When adding features:
 
 ## Quick Reference
 
-### Start Development
+### Local Development
 
 ```bash
 # Setup (first time)
-npm run infra:up
 npm install
+# Configure .env with Railway database URLs
 npm run db:migrate
 
 # Development
@@ -163,16 +164,17 @@ npm run build          # Build all packages
 npm run lint           # Lint codebase
 npm run format         # Format code
 npm run db:studio      # Open Prisma Studio
-npm run infra:up       # Start Docker services
-npm run infra:down     # Stop Docker services
 ```
+
+### Deployment
+
+The application is deployed on Railway with automatic deployments from the main branch. Railway provides managed PostgreSQL and Redis services.
 
 ### Project Structure
 
 ```
 apps/api/          - Fastify API server
 packages/shared/   - Shared types and utilities
-infra/            - Docker infrastructure
 scripts/          - Setup and utility scripts
 ```
 

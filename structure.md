@@ -8,9 +8,9 @@ This document explains the responsibility of each folder and how future phases i
 site-knowledge-graph/
 ├── apps/              # Application code
 ├── packages/          # Shared libraries
-├── infra/            # Infrastructure configuration
 ├── scripts/          # Utility scripts
-├── .env.example      # Environment template
+├── .env.example      # Environment template (for local dev)
+├── .env.production.example # Production env template (Railway)
 ├── package.json      # Root package config (workspaces)
 ├── tsconfig.base.json # Base TypeScript config
 └── *.md              # Documentation
@@ -166,21 +166,16 @@ packages/crawler/
 - Easier to test independently
 - Clear boundary for crawling domain
 
-## Infrastructure Directory
+## Infrastructure
 
-Location: `infra/`
+**Current**: Railway managed services (PostgreSQL, Redis)
 
-**Purpose**: Infrastructure as code and service configuration
+**Deployment**: Automatic deployments from Git repository
 
-```
-infra/
-└── docker-compose.yml  # PostgreSQL + Redis containers
-```
-
-**Future Additions**:
-- `kubernetes/` - K8s manifests for production
-- `nginx/` - Reverse proxy configuration
-- `monitoring/` - Prometheus/Grafana setup
+**Future Considerations**:
+- Additional monitoring dashboards
+- Custom alerting rules in Railway
+- Performance optimization configurations
 
 ## Scripts Directory
 
@@ -194,9 +189,8 @@ Location: `scripts/`
 
 **Future Additions**:
 - `seed-db.ts` - Database seeding for development
-- `backup.sh` - Database backup automation
-- `deploy.sh` - Production deployment
 - `benchmark.ts` - Performance testing
+- `migration-helper.ts` - Database migration utilities
 
 ## How Future Phases Plug In
 
@@ -316,9 +310,11 @@ apps/*/
 ## Configuration Management
 
 **Environment Variables**:
-- Defined in `.env.example`
+- Local development: `.env.example`
+- Production (Railway): `.env.production.example` as reference
+- Railway automatically provides: `DATABASE_URL`, Redis connection variables
 - Validated in `apps/api/src/config/env.ts`
-- Never committed (in `.gitignore`)
+- Never committed to Git (in `.gitignore`)
 
 **Application Config**:
 - Constants in `packages/shared/src/constants/`

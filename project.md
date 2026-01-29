@@ -16,20 +16,20 @@ Existing solutions either:
 
 ## Solution
 
-`site-knowledge-graph` is a **local-first, privacy-respecting** application that:
+`site-knowledge-graph` is a **cloud-deployed, privacy-respecting** application (hosted on Railway) that:
 
 - Crawls websites ethically (with permission, respecting robots.txt)
 - Extracts and structures content
 - Builds knowledge graphs automatically
 - Generates question-answer pairs
-- Keeps all data local (no external API calls for storage)
+- Uses managed cloud services for reliable operation
 
 ## Goals
 
 ### Primary Goals
 
 1. **Ethical Crawling**: Respect website owners, robots.txt, and rate limits
-2. **Local-First**: All data processing happens on user's machine
+2. **Cloud-Deployed**: Reliable hosting on Railway with managed services
 3. **Type-Safe**: Comprehensive TypeScript coverage with strict mode
 4. **Extensible**: Clean architecture allowing feature additions
 5. **Production-Ready**: Real code, no placeholders, comprehensive error handling
@@ -37,7 +37,7 @@ Existing solutions either:
 ### Secondary Goals
 
 - Fast performance with efficient caching
-- Easy setup with Docker
+- Easy deployment with Railway
 - Clear documentation for each phase
 - Reusable shared utilities and types
 
@@ -46,10 +46,9 @@ Existing solutions either:
 ### What This Project Is NOT
 
 1. **Not a web scraper service**: Users must have permission to crawl sites
-2. **Not cloud-based**: Designed for local deployment only
-3. **Not a general-purpose crawler**: Focused on knowledge extraction, not archiving
-4. **Not a SaaS**: No user accounts, payments, or hosted infrastructure
-5. **Not immediate**: Built in phases, not all features available at once
+2. **Not a general-purpose crawler**: Focused on knowledge extraction, not archiving
+3. **Not immediate**: Built in phases, not all features available at once
+4. **Not for mass scraping**: Designed for ethical, permission-based crawling only
 
 ### Explicitly Out of Scope
 
@@ -72,7 +71,7 @@ Existing solutions either:
 - Project structure (monorepo with workspaces)
 - TypeScript configuration
 - Fastify API server (skeleton)
-- PostgreSQL + Redis with Docker
+- Railway deployment with managed PostgreSQL and Redis
 - Prisma ORM setup
 - Database schema (Site, Page, CrawlJob)
 - Development tooling (ESLint, Prettier)
@@ -82,7 +81,7 @@ Existing solutions either:
 - All code compiles
 - API server starts and responds to health checks
 - Database migrations run successfully
-- Docker containers start without errors
+- Railway deployment successful with automatic deployments
 
 ### Phase 1: Crawling Engine
 
@@ -211,6 +210,7 @@ Existing solutions either:
 - JSONB support for flexible metadata
 - Full-text search capabilities
 - Mature ecosystem and tooling
+- Excellent Railway managed service with automatic backups
 
 ### Why Prisma?
 
@@ -224,6 +224,7 @@ Existing solutions either:
 - Fast queue management for crawl jobs
 - Caching layer for frequent queries
 - Simple pub/sub for future real-time features
+- Reliable Railway managed service with persistence
 
 ### Why Monorepo?
 
@@ -238,6 +239,7 @@ Existing solutions either:
 - ✅ Project compiles without errors
 - ✅ API responds to health checks
 - ✅ Database migrations run successfully
+- ✅ Railway deployment configured and working
 
 ### Phase 1
 - Crawl 100 pages in <10 minutes

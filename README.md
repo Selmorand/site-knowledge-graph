@@ -1,6 +1,6 @@
 # Site Knowledge Graph
 
-A local-first application for crawling websites (with permission), extracting structured content, and building knowledge graphs for question generation.
+A cloud-deployed application (hosted on Railway) for crawling websites (with permission), extracting structured content, and building knowledge graphs for question generation.
 
 ## Overview
 
@@ -11,7 +11,7 @@ This project enables users to:
 3. Build knowledge graphs from extracted content
 4. Generate question-answer pairs for learning or testing
 
-All data stays local on your machine. No external services required.
+Deployed on Railway with managed PostgreSQL and Redis services for reliable cloud operation.
 
 ## Features
 
@@ -21,7 +21,7 @@ All data stays local on your machine. No external services required.
 - Fastify API server
 - PostgreSQL database with Prisma ORM
 - Redis for caching and job queuing
-- Docker infrastructure
+- Railway cloud deployment
 - Health monitoring endpoints
 
 ### Planned Features
@@ -44,61 +44,45 @@ All data stays local on your machine. No external services required.
 ## Prerequisites
 
 - Node.js 20+ and npm 10+
-- Docker and Docker Compose
 - Git
+- Railway account (for deployment)
 
 ## Quick Start
 
-### 1. Clone and Setup
+### Local Development
 
 ```bash
-# Clone the repository
+# 1. Clone the repository
 git clone <repository-url>
 cd site-knowledge-graph
 
-# Run setup script
-# On macOS/Linux:
-bash scripts/setup.sh
-
-# On Windows:
-.\scripts\setup.ps1
-```
-
-### 2. Start Development
-
-```bash
-# Start the API server
-npm run dev
-
-# In another terminal, view database
-npm run db:studio
-```
-
-The API will be available at `http://localhost:3000`
-
-## Manual Setup
-
-If you prefer manual setup:
-
-```bash
-# 1. Install dependencies
+# 2. Install dependencies
 npm install
 
-# 2. Copy environment file
+# 3. Configure environment
+# Copy .env.example to .env and add Railway database URLs
 cp .env.example .env
-
-# 3. Start Docker services
-npm run infra:up
 
 # 4. Generate Prisma client
 npm run db:generate --workspace=apps/api
 
-# 5. Run migrations
+# 5. Run migrations (connects to Railway database)
 npm run db:migrate --workspace=apps/api
 
 # 6. Start development server
 npm run dev
 ```
+
+The API will be available at `http://localhost:3000`
+
+### Railway Deployment
+
+The application is configured for automatic deployment on Railway:
+
+1. Connect your GitHub repository to Railway
+2. Add PostgreSQL and Redis services in Railway
+3. Railway will automatically set DATABASE_URL and Redis environment variables
+4. Push to main branch to trigger deployment
 
 ## Available Scripts
 
@@ -114,11 +98,6 @@ npm run dev
 - `npm run db:migrate` - Run database migrations
 - `npm run db:studio` - Open Prisma Studio (database GUI)
 - `npm run db:generate` - Generate Prisma client
-
-### Infrastructure
-
-- `npm run infra:up` - Start Docker containers (PostgreSQL + Redis)
-- `npm run infra:down` - Stop Docker containers
 
 ## Project Structure
 
@@ -140,9 +119,6 @@ site-knowledge-graph/
 │       ├── constants/    # Constants
 │       └── logger.ts     # Logging utility
 │
-├── infra/
-│   └── docker-compose.yml # Docker services
-│
 ├── scripts/              # Setup scripts
 │
 └── docs/                 # Documentation
@@ -162,15 +138,16 @@ site-knowledge-graph/
 
 ## Environment Variables
 
-See `.env.example` for all available configuration options.
+See `.env.example` and `.env.production.example` for all available configuration options.
 
 Key variables:
 
-- `DATABASE_URL` - PostgreSQL connection string
-- `REDIS_HOST` / `REDIS_PORT` - Redis connection
+- `DATABASE_URL` - PostgreSQL connection string (provided by Railway)
+- `REDIS_HOST` / `REDIS_PORT` / `REDIS_PASSWORD` - Redis connection (provided by Railway)
 - `PORT` - API server port (default: 3000)
 - `NODE_ENV` - Environment (development/production)
 - `LOG_LEVEL` - Logging level (info/debug/error)
+- `API_SECRET` - Secret key for API authentication (generate a strong random value)
 
 ## Development Guidelines
 
@@ -184,7 +161,7 @@ See `claude.md` for detailed development rules and architectural principles.
 
 ## Database
 
-The application uses PostgreSQL with the following core tables:
+The application uses PostgreSQL (hosted on Railway) with the following core tables:
 
 - **Sites**: Websites to be crawled
 - **Pages**: Individual pages from sites
@@ -192,39 +169,39 @@ The application uses PostgreSQL with the following core tables:
 
 View full schema in `data-model.md` or explore with Prisma Studio.
 
-## Docker Services
+## Cloud Services
 
-- **PostgreSQL**: Port 5432 (database)
-- **Redis**: Port 6379 (cache/queue)
-
-Manage with `npm run infra:up` and `npm run infra:down`
+- **PostgreSQL**: Managed by Railway (automatic backups and scaling)
+- **Redis**: Managed by Railway (cache/queue)
+- **API Hosting**: Railway (automatic deployments from Git)
 
 ## Troubleshooting
 
-### Docker Issues
+### Database Connection Issues
+
+1. Verify your `DATABASE_URL` in `.env` is correct
+2. Ensure Railway database service is running
+3. Check Railway dashboard for service status
+
+### Database Schema Issues
 
 ```bash
-# Restart containers
-npm run infra:down
-npm run infra:up
-
-# View logs
-docker-compose -f infra/docker-compose.yml logs
-```
-
-### Database Issues
-
-```bash
-# Reset database
+# Reset database schema
 npm run db:push --workspace=apps/api
 
-# Regenerate client
+# Regenerate Prisma client
 npm run db:generate --workspace=apps/api
 ```
 
-### Port Conflicts
+### Local Port Conflicts
 
-If ports 3000, 5432, or 6379 are in use, update `.env` and `infra/docker-compose.yml`
+If port 3000 is in use locally, update `PORT` in your `.env` file
+
+### Railway Deployment Issues
+
+1. Check build logs in Railway dashboard
+2. Verify all environment variables are set
+3. Ensure `NODE_ENV` is set to `production` in Railway
 
 ## License
 

@@ -2,7 +2,7 @@
   "name": "site-knowledge-graph",
   "version": "0.1.0",
   "private": true,
-  "description": "Local-first application for crawling websites and building knowledge graphs",
+  "description": "Cloud-deployed application (Railway) for crawling websites and building knowledge graphs",
   "workspaces": [
     "apps/*",
     "packages/*"

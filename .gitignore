@@ -39,3 +39,6 @@ postgres-data/
 .cache/
 coverage/
 .temp/
+
+# Demo page
+DEMO.html
