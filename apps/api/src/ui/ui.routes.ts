@@ -222,4 +222,35 @@ export async function uiRoutes(fastify: FastifyInstance) {
       return reply.code(500).send(`Error loading reports: ${error.message}`);
     }
   });
+
+  // Delete a report/site and all associated data
+  fastify.post('/reports/delete/:siteId', async (request, reply) => {
+    const { siteId } = request.params as { siteId: string };
+
+    try {
+      // Verify site exists
+      const site = await prisma.site.findUnique({
+        where: { id: siteId },
+      });
+
+      if (!site) {
+        return reply.code(404).send('Site not found');
+      }
+
+      fastify.log.info({ siteId, domain: site.domain }, 'Deleting site and all associated data');
+
+      // Delete site (cascade delete will handle pages, entities, relations, etc.)
+      await prisma.site.delete({
+        where: { id: siteId },
+      });
+
+      fastify.log.info({ siteId, domain: site.domain }, 'Site deleted successfully');
+
+      // Redirect back to reports page
+      return reply.redirect(303, '/reports');
+    } catch (error: any) {
+      fastify.log.error({ error, siteId }, 'Error deleting site');
+      return reply.code(500).send(`Error deleting report: ${error.message}`);
+    }
+  });
 }

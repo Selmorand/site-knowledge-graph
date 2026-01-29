@@ -91,6 +91,11 @@ export function renderReportsPage(reports: ReportSummary[]): string {
               <a href="/api/report/${report.siteId}/export/pdf" class="btn btn-secondary" style="text-decoration: none;">
                 📑 Download PDF
               </a>
+              <form method="POST" action="/reports/delete/${report.siteId}" style="display: inline;" onsubmit="return confirm('⚠️ Are you sure you want to delete this report?\\n\\nThis will permanently delete:\\n• Site: ${escapeHtml(report.title || report.domain)}\\n• ${report.pageCount} pages\\n• ${report.entityCount} entities\\n• All associated data\\n\\nThis action cannot be undone!');">
+                <button type="submit" class="btn" style="background: #dc3545; border: none; cursor: pointer;" onmouseover="this.style.background='#c82333'" onmouseout="this.style.background='#dc3545'">
+                  🗑️ Delete
+                </button>
+              </form>
             </div>
           </div>
         `).join('')}
